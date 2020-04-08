@@ -140,6 +140,16 @@ def get_last_block():
 @app.route("/mine", methods=["POST"])
 def post_proof():
     proof = request.get_json()["proof"]
+    previous_hash = blockchain.hash(blockchain.last_block)
+    block = blockchain.new_block(proof, previous_hash)
+    response = {
+        'message': "New Block Forged",
+        'index': block['index'],
+        'transactions': block['transactions'],
+        'proof': block['proof'],
+        'previous_hash': block['previous_hash'],
+    }
+    return jsonify(response)
 # Run the program on port 5000
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
