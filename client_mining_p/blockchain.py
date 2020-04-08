@@ -137,6 +137,9 @@ def get_last_block():
         "last_block": blockchain.last_block
     }
     return jsonify(response), 200
+@app.route("/mine", methods=["POST"])
+def post_proof():
+    proof = request.get_json()["proof"]
 # Run the program on port 5000
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
