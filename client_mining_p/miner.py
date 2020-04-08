@@ -13,9 +13,9 @@ def proof_of_work(block):
     in an effort to find a number that is a valid proof
     :return: A valid proof for the provided block
     """
-    block_string = json.dumps(self.last_block, sort_keys=True)
+    block_string = json.dumps(block, sort_keys=True)
     proof = 0
-    while not self.valid_proof(block_string, proof):
+    while not valid_proof(block_string, proof):
         proof += 1
     return proof
 
@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
         # TODO: Get the block from `data` and use it to look for a new proof
         # new_proof = ???
-
+        print(data)
         # When found, POST it to the server {"proof": new_proof, "id": id}
         post_data = {"proof": new_proof, "id": id}
 
