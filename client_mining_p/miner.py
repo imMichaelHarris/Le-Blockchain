@@ -49,6 +49,7 @@ if __name__ == '__main__':
     print("ID is", id)
     f.close()
 
+    coins = 0
     # Run forever until interrupted
     while True:
         r = requests.get(url=node + "/last_block")
@@ -73,4 +74,8 @@ if __name__ == '__main__':
         # TODO: If the server responds with a 'message' 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
         # print the message from the server.
-        pass
+        if data["message"] == "New Block Forged":
+            coins += 1
+            print(f"{coins} coins mined")
+        else:
+            print(data["message"])
