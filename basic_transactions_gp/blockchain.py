@@ -206,8 +206,25 @@ def new_transaction():
     response = {'message': f"Transaction will be added to Block {index}"}
     return jsonify(response), 200
 
+@app.route("/me", methods=["POST"])
+def get_transaction():
+    name = request.get_json()
+    amount = 0
+    transactions = []
+    for block in blockchain.chain:
+        for transaction in block["transactions"]:
+            if transaction["recipient"] == name:
+                amount += transaction["amount"]
+            elif transaction["sender"] == name:
+                amount -= transaction["amount"]
+            if transaction["recipient"] == name or transaction["sender"] == name:
+                transactions.append(transaction)
 
-
+    response = {
+        "balance": amount,
+        "transactions": transactions
+    }
+    return jsonify(response), 200
 
 
 # Run the program on port 5000
