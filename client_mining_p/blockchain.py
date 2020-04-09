@@ -127,7 +127,11 @@ def get_last_block():
     return jsonify(response), 200
 @app.route("/mine", methods=["POST"])
 def post_proof():
-    proof = request.get_json()["proof"]
+    data = request.get_json()
+    if "proof" not in data or "id" not in data:
+        response = {"message": "You must send a proof and id"}
+        return jsonify(response), 400
+    proof = data["proof"]
     # print("Herr", valid)
     block_string = json.dumps(blockchain.last_block, sort_keys=True)
     valid = blockchain.valid_proof(block_string, proof)
